@@ -1,20 +1,98 @@
-﻿// ConsoleApplication1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
+﻿Любимый староста Мы ничего не читали., [26.12.2023 22:19]
 #include <iostream>
+#include <fstream>
+#include<string>
+#include <cstdlib>
+
+using namespace std;
+int ID;
+
+struct todo {
+    int id;
+    string task;
+};
+
+
+void addtodo() {
+    system("cls");
+    cout << "\t*******************************************************************" << endl;
+    cout << "\t*                      To Do List Application                     *" << endl;
+    cout << "\t*******************************************************************" << endl << endl << endl << endl;
+    todo todo;
+    cout << "\n\tEnter new task: ";
+    cin.get();
+    getline(cin, todo.task);
+    ID++;
+
+    ofstream write;
+    write.open("todo.txt", ios::app);
+    write << "\n" << ID;
+    write << "\n" << todo.task;
+    write.close();
+
+
+    write.open("id.txt");
+    write << ID;
+    write.close();
+
+    char ch;
+    cout << "\n\tDo you want to add more task? y/n: ";
+    cin >> ch;
+
+
+    if (ch == 'y') {
+        addtodo();
+    }
+    else {
+        cout << "\n\tTask has been added successfully";
+        return;
+    }
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    system("cls");
+    cout << "\t*******************************************************************" << endl;
+    cout << "\t*                      To Do List Application                     *" << endl;
+    cout << "\t*******************************************************************" << endl << endl << endl << endl;
+    ifstream read;
+    read.open("id.txt");
+    if (!read.fail()) {
+        read >> ID;
+    }
+    else {
+        ID = 0;
+    }
+    read.close();
+
+    while (true) {
+        cout << endl;
+        cout << "\n\t1.Add Task";
+        cout << "\n\t2.Display Task";
+        cout << "\n\t3.Search Task";
+        cout << "\n\t4.Delete Task";
+        cout << "\n\t5.Update Task";
+
+        int choice;
+        cout << "\n\n\tEnter choice : ";
+        cin >> choice;
+        switch (choice) {
+        case 1:
+            addtodo();
+            break;
+        case 2:
+            readData();
+            break;
+        case 3:
+            searchData();
+            break;
+        case 4:
+            deleteData();
+            break;
+        case 5:
+            updateData();
+            break;
+        }
+    }
+
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
