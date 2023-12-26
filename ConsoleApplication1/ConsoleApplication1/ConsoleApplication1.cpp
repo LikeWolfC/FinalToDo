@@ -1,5 +1,4 @@
-﻿Любимый староста Мы ничего не читали., [26.12.2023 22:19]
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include<string>
 #include <cstdlib>
@@ -49,6 +48,78 @@ void addtodo() {
     }
 }
 
+
+void print(todo s) {
+    cout << "\n\tID is : " << s.id;
+    cout << "\n\tTask is : " << s.task;
+}
+
+int searchData() {
+    system("cls");
+    cout << "\t*******************************************************************" << endl;
+    cout << "\t*                      To Do List Application                     *" << endl;
+    cout << "\t*******************************************************************" << endl << endl << endl << endl;
+    int id;
+    cout << "\n\tEnter task id: ";
+    cin >> id;
+    todo todo;
+    ifstream read;
+    read.open("todo.txt");
+
+    while (!read.eof()) {
+        read >> todo.id;
+        read.ignore();
+        getline(read, todo.task);
+        if (todo.id == id) {
+            print(todo);
+            return id;
+        }
+    }
+}
+
+void updateData() {
+    system("cls");
+    cout << "\t*******************************************************************" << endl;
+    cout << "\t*                      To Do List Application                     *" << endl;
+    cout << "\t*******************************************************************" << endl << endl << endl << endl;
+    int id = searchData();
+    cout << "\n\n\tYou want to update this task (y/n) : ";
+    char choice;
+    cin >> choice;
+    if (choice == 'y') {
+        todo newData;
+        cout << "\n\tEnter todo task : ";
+        cin.get();
+        getline(cin, newData.task);
+        todo todo;
+        ofstream tempFile;
+        tempFile.open("temp.txt");
+        ifstream read;
+        read.open("todo.txt");
+
+        while (!read.eof()) {
+            read >> todo.id;
+            read.ignore();
+            getline(read, todo.task);
+            if (todo.id != id) {
+                tempFile << "\n" << todo.id;
+                tempFile << "\n" << todo.task;
+            }
+            else {
+                tempFile << "\n" << todo.id;
+                tempFile << "\n" << newData.task;
+            }
+        }
+        read.close();
+        tempFile.close();
+        remove("todo.txt");
+        rename("temp.txt", "todo.txt");
+        cout << "\n\tTask updated successfuly";
+    }
+    else {
+        cout << "\n\tRecord not deleted";
+    }
+}
 int main()
 {
     system("cls");
