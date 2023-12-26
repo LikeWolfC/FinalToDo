@@ -1,6 +1,4 @@
-﻿WhoI, [26.12.2023 22:35]
-WhoI, [26.12.2023 22:19]
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include<string>
 #include <cstdlib>
@@ -56,27 +54,6 @@ void print(todo s) {
     cout << "\n\tTask is : " << s.task;
 }
 
-
-void readData() {
-    system("cls");
-    cout << "\t*******************************************************************" << endl;
-    cout << "\t*                      To Do List Application                     *" << endl;
-    cout << "\t*******************************************************************" << endl << endl << endl << endl;
-    todo todo;
-    ifstream read;
-    read.open("todo.txt");
-    cout << "\n\t------------------Your current Tasks in the list--------------------";
-
-    while (!read.eof()) {
-        read >> todo.id;
-        read.ignore();
-        getline(read, todo.task);
-        print(todo);
-    }
-    read.close();
-}
-
-
 int searchData() {
     system("cls");
     cout << "\t*******************************************************************" << endl;
@@ -100,45 +77,6 @@ int searchData() {
     }
 }
 
-
-void deleteData() {
-    system("cls");
-    cout << "\t*******************************************************************" << endl;
-    cout << "\t*                      To Do List Application                     *" << endl;
-    cout << "\t*******************************************************************" << endl << endl << endl << endl;
-    int id = searchData();
-    cout << "\n\tDo you want to delete this task (y/n) : ";
-    char choice;
-    cin >> choice;
-    if (choice == 'y') {
-        todo todo;
-        ofstream tempFile;
-        tempFile.open("temp.txt");
-        ifstream read;
-        read.open("todo.txt");
-
-        while (!read.eof()) {
-            read >> todo.id;
-            read.ignore();
-            getline(read, todo.task);
-            if (todo.id != id) {
-                tempFile << "\n" << todo.id;
-                tempFile << "\n" << todo.task;
-            }
-        }
-        read.close();
-        tempFile.close();
-        remove("todo.txt");
-        rename("temp.txt", "todo.txt");
-        cout << "\n\tTask deleted successfuly";
-    }
-    else {
-        cout << "\n\tRecord not deleted";
-    }
-}
-
-WhoI, [26.12.2023 22:35]
-WhoI, [26.12.2023 22:19]
 void updateData() {
     system("cls");
     cout << "\t*******************************************************************" << endl;
